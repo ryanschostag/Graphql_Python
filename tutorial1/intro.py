@@ -1,16 +1,24 @@
 from fastapi import FastAPI
-import graphene
-from starlette.graphql import GraphQLApp
+import strawberry
+from strawberry.fastapi import GraphQLRouter
 
 
-class calculator(graphene.ObjectType):
-    concat=graphene.String(a=graphene.String(),b=graphene.String())
-    add=graphene.String(a=graphene.Int(),b=graphene.Int())
-    def resolve_concat(self,info,a,b):
-        return a+" "+b
-    def resolve_add(self,info,a,b):
-        return a+b
+@strawberry.type
+class Query:
 
-app=FastAPI()
-app.add_route("/",GraphQLApp(schema=graphene.Schema(query=calculator)))
-    
+    @strawberry.field
+    def concat(self, a: str, b: str) -> str:
+        return a + " " + b
+
+    @strawberry.field
+    def add(self, a: int, b: int) -> int:
+        return a + b
+
+
+schema = strawberry.Schema(query=Query)
+
+graphql_app = GraphQLRouter(schema)
+
+app = FastAPI()
+
+app.include_router(graphql_app, prefix="/graphql")
