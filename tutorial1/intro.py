@@ -4,7 +4,7 @@ from strawberry.fastapi import GraphQLRouter
 
 
 @strawberry.type
-class Query:
+class calculator:
 
     @strawberry.field
     def concat(self, a: str, b: str) -> str:
@@ -15,7 +15,7 @@ class Query:
         return a + b
 
 
-schema = strawberry.Schema(query=Query)
+schema = strawberry.Schema(query=calculator)
 
 graphql_app = GraphQLRouter(schema)
 
