@@ -1,6 +1,6 @@
 import strawberry
-from schema import Employee
-from data import read_file
+from .schema import Employee
+from .data import read_file
 
 
 @strawberry.type
