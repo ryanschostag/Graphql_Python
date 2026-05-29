@@ -1,7 +1,7 @@
 import strawberry
 from fastapi import FastAPI
 from strawberry.fastapi import GraphQLRouter
-from data import read_data
+from .data import read_data
 
 
 @strawberry.type
