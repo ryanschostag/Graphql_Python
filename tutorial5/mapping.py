@@ -1,6 +1,6 @@
 import strawberry
-from schema import Weather
-from data import read_data
+from .schema import Weather
+from .data import read_data
 
 
 @strawberry.type
@@ -11,9 +11,7 @@ class Query:
         for row in data:
             if row["city"] == city:
                 return Weather(**row)
-        return Weather(city=city, temperature="not found in the sequence")
-        }
-
-
-
-
+        return Weather(
+            city=city,
+            temperature="not found in the sequence"
+        )
