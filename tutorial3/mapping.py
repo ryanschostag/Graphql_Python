@@ -1,8 +1,10 @@
-import graphene
-from schema import courses
+import strawberry
+from schema import Course
 from data import read_data
 
-class query(graphene.ObjectType):
-    course=graphene.List(courses)
-    def resolve_course(self,info):
-        return read_data()
+
+@strawberry.type
+class Query:
+    @strawberry.field
+    def course(self) -> list[Course]:
+        return [Course(**c) for c in read_data()]

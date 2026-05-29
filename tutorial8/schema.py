@@ -1,15 +1,17 @@
-import graphene
+import strawberry
 
-class player(graphene.Interface):
-    name=graphene.String()
-    country=graphene.String()
 
-class footballplayer(graphene.ObjectType):
-    class Meta:
-        interfaces=(player,)
-    position=graphene.String()
+@strawberry.interface
+class Player:
+    name: str
+    country: str
 
-class cricketplayer(graphene.ObjectType):
-    class Meta:
-        interfaces=(player,)
-    battingorder=graphene.Int()
+
+@strawberry.type
+class FootballPlayer(Player):
+    position: str
+
+
+@strawberry.type
+class CricketPlayer(Player):
+    battingorder: int

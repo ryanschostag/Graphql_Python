@@ -1,7 +1,9 @@
-import graphene
+import strawberry
 
-class emp(graphene.ObjectType):
-    name=graphene.String()
-    city=graphene.String()
-    designation=graphene.String()
-    experience_in_year=graphene.String()
+
+@strawberry.type
+class Employee:
+    name: str
+    city: str
+    designation: str
+    experience_in_year: str

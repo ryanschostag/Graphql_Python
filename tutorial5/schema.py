@@ -1,6 +1,7 @@
-import graphene
+import strawberry
 
 
-class weather(graphene.ObjectType):
-    city=graphene.String()
-    temperature=graphene.String()
+@strawberry.type
+class Weather:
+    city: str
+    temperature: str

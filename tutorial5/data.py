@@ -1,13 +1,13 @@
-data=data=[
-{
-	"city":"kolkata",
-	"temperature":"34"
-},
-{
-	"city":"mumbai",
-	"temperature":"29"
-},
-{
+data = [
+	{
+		"city": "kolkata",
+		"temperature": "34",
+	},
+]
+
+
+def read_data():
+	return data
 	"city":"chennai",
 	"temperature":"38"
 },

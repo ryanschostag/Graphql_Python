@@ -1,6 +1,8 @@
-import graphene
+import strawberry
 
-class courses(graphene.ObjectType):
-    name=graphene.String()
-    level=graphene.String()
-    duration_in_year=graphene.Int()
+
+@strawberry.type
+class Course:
+    name: str
+    level: str
+    duration_in_year: int

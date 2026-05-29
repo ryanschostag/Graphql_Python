@@ -1,15 +1,26 @@
-import graphene
+import strawberry
 from fastapi import FastAPI
-from starlette.graphql import GraphQLApp
-course_name="computer sience"
-course_time_year=1
-class course(graphene.ObjectType):
-    name= graphene.String()
-    duration=graphene.Int()
-    def resolve_name(self,info):
+from strawberry.fastapi import GraphQLRouter
+
+course_name = "computer science"
+course_time_year = 1
+
+
+@strawberry.type
+class Query:
+    @strawberry.field
+    def name(self) -> str:
         return course_name
-    def resolve_duration(self,into):
+
+    @strawberry.field
+    def duration(self) -> int:
         return course_time_year
-app=FastAPI()
-app.add_route("/graphql",GraphQLApp(schema=graphene.Schema(query=course)))
-print(graphene.Schema(query=course))
+
+
+schema = strawberry.Schema(query=Query)
+graphql_app = GraphQLRouter(schema)
+
+app = FastAPI()
+app.include_router(graphql_app, prefix="/graphql")
+
+print(schema)

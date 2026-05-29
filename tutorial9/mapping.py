@@ -1,17 +1,18 @@
-import graphene
-from graphene import String
-from schema import player
+import strawberry
+from schema import FootballPlayer, CricketPlayer, Invalid
 from data import read_data
 
-class query(graphene.ObjectType):
-    player=graphene.List(player,required=True,playertype=String(required=True))
-    def resolve_player(self,info,playertype):
-        data=read_data()
-        if playertype=="fplayer":
-            return data[0]["footballplayer"]
-        elif playertype=="cplayer":
-            return data[0]["cricketplayer"]
+
+@strawberry.type
+class Query:
+    @strawberry.field
+    def player(self, playertype: str) -> list:
+        data = read_data()
+        if playertype == "fplayer":
+            return [FootballPlayer(**p) for p in data[0]["footballplayer"]]
+        elif playertype == "cplayer":
+            return [CricketPlayer(**p) for p in data[0]["cricketplayer"]]
         else:
-            return data[0]["invalid"]
-        
+            return [Invalid(**p) for p in data[0]["invalid"]]
+
 

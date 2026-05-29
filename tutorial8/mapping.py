@@ -1,17 +1,16 @@
-import graphene
-from schema import footballplayer,cricketplayer
+import strawberry
+from schema import FootballPlayer, CricketPlayer
 from data import read_data
 
-class query(graphene.ObjectType):
-    class Meta:
-        name="interfacequery"
-        description="list with interface"
-    fplayer=graphene.List(footballplayer,description="list object type implements interface")
-    def resolve_fplayer(self,info):
-        data=read_data()
-        return data[0]["footballplayer"]
-    
-    cplayer=graphene.List(cricketplayer,description="list object type implements interface")
-    def resolve_cplayer(self,info):
-        data=read_data()
-        return data[0]["cricketplayer"]
+
+@strawberry.type
+class Query:
+    @strawberry.field(description="list object type implements interface")
+    def fplayer(self) -> list[FootballPlayer]:
+        data = read_data()
+        return [FootballPlayer(**p) for p in data[0]["footballplayer"]]
+
+    @strawberry.field(description="list object type implements interface")
+    def cplayer(self) -> list[CricketPlayer]:
+        data = read_data()
+        return [CricketPlayer(**p) for p in data[0]["cricketplayer"]]

@@ -1,13 +1,8 @@
-import graphene
+import strawberry
 from fastapi import FastAPI
-from graphene.types.objecttype import ObjectType
-from starlette.graphql import GraphQLApp
-from graphene import ObjectType as ot
-from graphene import String as st
-from graphene import Int as int
-from graphene import List as li
+from strawberry.fastapi import GraphQLRouter
 
-data=[
+data = [
     {
         "name": "Roni",
         "city": "Cologne",
@@ -27,15 +22,24 @@ data=[
 }
 ]
 
-class students(ot):
-    name=st()
-    city=st()
-    country=st()
+@strawberry.type
+class Student:
+    name: str
+    city: str
+    country: str
 
-class person(ot):
-    student=li(students)
-    def resolve_student(self,info):
-        return data
-app=FastAPI()
-app.add_route("/graphql",GraphQLApp(schema=graphene.Schema(query=person)))
-print(graphene.Schema(query=person))
+
+@strawberry.type
+class Query:
+    @strawberry.field
+    def student(self) -> list[Student]:
+        return [Student(**d) for d in data]
+
+
+schema = strawberry.Schema(query=Query)
+graphql_app = GraphQLRouter(schema)
+
+app = FastAPI()
+app.include_router(graphql_app, prefix="/graphql")
+
+print(schema)

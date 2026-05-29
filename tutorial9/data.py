@@ -1,4 +1,4 @@
-data=data=[
+data = [
     {
         "footballplayer":[
             {
@@ -52,5 +52,7 @@ data=data=[
     }
   
 ]
+
+
 def read_data():
     return data

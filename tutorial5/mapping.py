@@ -1,18 +1,19 @@
-import graphene
-from schema import weather
+import strawberry
+from schema import Weather
 from data import read_data
 
-class query(graphene.ObjectType):
-    city_temp=graphene.Field(weather,city=graphene.String())
-    def resolve_city_temp(self,info,city):
-        data=read_data()
+
+@strawberry.type
+class Query:
+    @strawberry.field
+    def city_temp(self, city: str) -> Weather:
+        data = read_data()
         for row in data:
-            if row["city"]==city:
-                return row
-        return {
-            "city":city,
-            "temperature":"not found in the sequence"
+            if row["city"] == city:
+                return Weather(**row)
+        return Weather(city=city, temperature="not found in the sequence")
         }
 
 
-        
+
+

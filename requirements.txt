@@ -1,3 +1,4 @@
-graphene
 fastapi
 uvicorn
+strawberry-graphql
+starlette
