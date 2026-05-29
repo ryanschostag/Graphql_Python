@@ -30,7 +30,7 @@ data = [
             },
             {
             "name":"virat",
-            "country":"indian",
+            "country":"india",
             "battingorder":2,
             "type":"cricketplayer"
             },

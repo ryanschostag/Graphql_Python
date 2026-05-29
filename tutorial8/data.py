@@ -26,7 +26,7 @@ data=[
             },
             {
             "name":"virat",
-            "country":"indian",
+            "country":"india",
             "battingorder":2
             },
             {
